@@ -1,4 +1,4 @@
-FROM debian:9-slim
+FROM debian:9
 LABEL maintainer="Richard Skumat"
 
 ENV DEBIAN_FRONTEND noninteractive
