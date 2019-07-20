@@ -1,6 +1,6 @@
-# debian9-contrib-nonfree docker image
+# debian-nonfree docker image
 
-Based on Debian 9-slim.
+Based on Debian 9 and 10.
 
 The image has:
 
