@@ -43,7 +43,7 @@ push_d10:
  only:
    - master
  script:
-   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster .
+   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest .
    - docker images
    - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10
    - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster
