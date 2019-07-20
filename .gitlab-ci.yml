@@ -20,31 +20,31 @@ build_d9:
   stage: build
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_IMAGE:stretch .
+    - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:stretch .
 
 build_d10:
   stage: build
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_IMAGE:buster .
+    - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster .
 
 push_d9:
  stage: push
  only:
    - master
  script:
-   - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_IMAGE:stretch .
+   - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:stretch .
    - docker images
-   - docker push $CI_REGISTRY_IMAGE:9
-   - docker push $CI_REGISTRY_IMAGE:stretch
+   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:9
+   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:stretch
 
 push_d10:
  stage: push
  only:
    - master
  script:
-   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_IMAGE:buster .
+   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster .
    - docker images
-   - docker push $CI_REGISTRY_IMAGE:10
-   - docker push $CI_REGISTRY_IMAGE:buster
+   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10
+   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster
    - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest
