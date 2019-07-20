@@ -21,14 +21,12 @@ build_d9:
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_IMAGE:stretch .
-    - docker run $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA cat /etc/os-release
 
 build_d10:
   stage: build
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_IMAGE:buster .
-    - docker run $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA cat /etc/os-release
 
 push_d9:
  stage: push
