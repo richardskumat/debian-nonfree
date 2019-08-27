@@ -17,7 +17,6 @@ stages:
 
 before_script:
   - docker info
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
 
 build_d9:
   stage: build
@@ -31,23 +30,48 @@ build_d10:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster .
 
-push_d9:
+push_d9_to_gitlab:
  stage: push
  only:
    - master
  script:
-   - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:9 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:stretch .
+   - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
+   - docker build --rm -f Dockerfile-debian9 -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:9 -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:stretch .
    - docker images
-   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:9
-   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:stretch
+   - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:9
+   - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:stretch
 
-push_d10:
+push_d10_to_gitlab:
  stage: push
  only:
    - master
  script:
-   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10 -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest .
+   - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
+   - docker build --rm -f Dockerfile-debian10 -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:10 -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:buster -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest .
    - docker images
-   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:10
-   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:buster
-   - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest
+   - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:10
+   - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:buster
+   - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
+
+push_d9_to_dockerhub:
+ stage: push
+ only:
+   - master
+ script:
+   - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+   - docker build --rm -f Dockerfile-debian9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:stretch .
+   - docker images
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:9
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:stretch
+
+push_d10_to_dockerhub:
+ stage: push
+ only:
+   - master
+ script:
+   - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+   - docker build --rm -f Dockerfile-debian10 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:10 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:buster -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest .
+   - docker images
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:10
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:buster
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest
