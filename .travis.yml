@@ -5,9 +5,11 @@ env:
   global:
     - DOCKER_USER: qwe1
     - DOCKER_IMAGE: debian-nonfree
-  matrix:
-    - DOCKER_FILE: Dockerfile-debian9
-    - DOCKER_FILE: Dockerfile-debian10
+    - GITLAB_REG_URL: registry.gitlab.com
+    - GITLAB_REG_USER: richardskumat
+    - GITLAB_REG_IMAGE: checkdmarc
+    - DOCKER_FILE1: Dockerfile-debian9
+    - DOCKER_FILE2: Dockerfile-debian10
   #matrix:
   #  - whatever
 
@@ -16,6 +18,20 @@ before_script:
 
 script:
   # Run tests.
-  - docker build -f $DOCKER_FILE -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE .
+  - docker build -f $DOCKER_FILE1 -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 .
+  - docker build -f $DOCKER_FILE2 -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 .
   - docker images
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE cat /etc/os-release
+  # run for d9
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/os-release
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/apt/sources.list
+  # run for d10
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/os-release
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/apt/sources.list
+  # run pushed images
+  # d9
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:stretch cat /etc/apt/sources.list
+  # d10
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:buster cat /etc/apt/sources.list
+  # run gitlab images
+  - docker run $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:stretch cat /etc/apt/sources.list
+  - docker run $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:buster cat /etc/apt/sources.list

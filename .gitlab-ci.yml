@@ -14,6 +14,7 @@ services:
 stages:
   - build
   - push
+  - test
 
 before_script:
   - docker info
@@ -75,3 +76,19 @@ push_d10_to_dockerhub:
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:10
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:buster
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest
+
+test_dockerhub_image:
+  stage: test
+  only:
+   - master
+  script:
+    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:stretch cat /etc/apt/sources.list
+    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:buster cat /etc/apt/sources.list
+
+test_gitlab_image:
+  stage: test
+  only:
+   - master
+  script:
+    - docker run --rm $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:stretch cat /etc/apt/sources.list
+    - docker run --rm $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:buster cat /etc/apt/sources.list
