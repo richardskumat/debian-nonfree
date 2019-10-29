@@ -7,7 +7,7 @@ env:
     - DOCKER_IMAGE: debian-nonfree
     - GITLAB_REG_URL: registry.gitlab.com
     - GITLAB_REG_USER: richardskumat
-    - GITLAB_REG_IMAGE: checkdmarc
+    - GITLAB_REG_IMAGE: debian-nonfree
     - DOCKER_FILE1: Dockerfile-debian9
     - DOCKER_FILE2: Dockerfile-debian10
   #matrix:
