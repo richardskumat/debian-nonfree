@@ -1,5 +1,7 @@
 # debian-nonfree docker image
 
+[![pipeline status](https://gitlab.com/richardskumat/debian-nonfree/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/debian-nonfree/commits/master)
+
 Based on debian:9 and debian:10.
 
 The image has:
