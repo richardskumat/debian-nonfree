@@ -21,17 +21,17 @@ script:
   - docker build -f $DOCKER_FILE1 -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 .
   - docker build -f $DOCKER_FILE2 -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 .
   - docker images
-  # run for d9
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/os-release
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/apt/sources.list
-  # run for d10
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/os-release
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/apt/sources.list
-  # run pushed images
+  # run --rm for d9
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/os-release
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE1 cat /etc/apt/sources.list
+  # run --rm for d10
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/os-release
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_FILE2 cat /etc/apt/sources.list
+  # run --rm pushed images
   # d9
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:stretch cat /etc/apt/sources.list
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:stretch cat /etc/apt/sources.list
   # d10
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:buster cat /etc/apt/sources.list
-  # run gitlab images
-  - docker run $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:stretch cat /etc/apt/sources.list
-  - docker run $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:buster cat /etc/apt/sources.list
+  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:buster cat /etc/apt/sources.list
+  # run --rm gitlab images
+  - docker run --rm $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:stretch cat /etc/apt/sources.list
+  - docker run --rm $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:buster cat /etc/apt/sources.list

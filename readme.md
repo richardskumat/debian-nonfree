@@ -1,18 +1,26 @@
 # debian-nonfree docker image
 
-Based on Debian 9 and 10.
+Based on debian:9 and debian:10.
 
 The image has:
 
 - contrib
-
 - non-free
 
-repos enabled for Ansible testing.
+repos enabled in /etc/apt/sources.list for Ansible testing.
 
-The image should be rebuilt daily.
+Compared to upstream debian:9,10, these images are only built for x64/amd64, so it won't
+run on armhf, aarch64(32 or 64 bit arm).
 
-# Links
+## Links to source code and build logs
+
+Gitlab
+
+https://gitlab.com/richardskumat/debian-nonfree
+
+Gitlab pipelines
+
+https://gitlab.com/richardskumat/debian-nonfree/pipelines
 
 Github
 
