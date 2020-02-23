@@ -1,18 +1,8 @@
 # debian-nonfree docker image
 
-[![pipeline status](https://gitlab.com/richardskumat/debian-nonfree/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/debian-nonfree/commits/master)
+Retired repository.
 
-Based on debian:9 and debian:10.
-
-The image has:
-
-- contrib
-- non-free
-
-repos enabled in /etc/apt/sources.list for Ansible testing.
-
-Compared to upstream debian:9,10, these images are only built for x64/amd64, so it won't
-run on armhf, aarch64(32 or 64 bit arm).
+I've my efforts to [docker-debian](https://gitlab.com/richardskumat/docker-debian).
 
 ## Links to source code and build logs
 
