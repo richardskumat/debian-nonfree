@@ -2,7 +2,8 @@
 
 Retired repository.
 
-I've my efforts to [docker-debian](https://gitlab.com/richardskumat/docker-debian).
+I've moved my efforts to
+[docker-debian](https://gitlab.com/richardskumat/docker-debian).
 
 ## Links to source code and build logs
 
